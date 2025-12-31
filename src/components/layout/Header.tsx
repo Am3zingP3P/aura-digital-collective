@@ -8,7 +8,7 @@ const Header = () => {
   const navItems = ['Services', 'Work', 'About', 'Contact'];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 px-6 md:px-12 lg:px-24 py-6">
+    <header className="fixed top-0 left-0 right-0 z-40 px-6 md:px-12 lg:px-24 py-6 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <a href="/" className="text-2xl font-display font-extrabold tracking-tight">
