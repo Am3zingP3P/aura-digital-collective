@@ -1,27 +1,27 @@
-import { useEffect, ReactNode } from 'react';
+import { useEffect, useRef, ReactNode } from 'react';
 import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
 
 interface SmoothScrollProps {
   children: ReactNode;
 }
 
 const SmoothScroll = ({ children }: SmoothScrollProps) => {
+  const lenisRef = useRef<Lenis | null>(null);
+
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
+      autoRaf: true,
+      lerp: 0.08,
       smoothWheel: true,
-      touchMultiplier: 2,
+      syncTouch: true,
+      touchMultiplier: 1.5,
     });
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+    lenisRef.current = lenis;
 
-    requestAnimationFrame(raf);
+    // Expose lenis to window for debugging
+    (window as unknown as { lenis: Lenis }).lenis = lenis;
 
     return () => {
       lenis.destroy();

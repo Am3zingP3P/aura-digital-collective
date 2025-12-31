@@ -1,9 +1,8 @@
-import { ArrowDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 pt-24 overflow-hidden">
       {/* Background grid */}
       <div className="absolute inset-0 opacity-[0.03]">
         <div className="absolute inset-0" style={{
@@ -71,12 +70,6 @@ const Hero = () => {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground animate-pulse-glow">
-        <span className="text-xs uppercase tracking-widest">Scroll</span>
-        <ArrowDown className="w-4 h-4" />
       </div>
     </section>
   );
