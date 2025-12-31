@@ -2,7 +2,8 @@ import { Button } from '@/components/ui/button';
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center px-6 md:px-12 lg:px-24 pt-24 overflow-hidden text-center">
+    // Added pb-40 md:pb-56 to create more background space at the bottom
+    <section className="relative min-h-screen flex flex-col justify-center items-center px-6 md:px-12 lg:px-24 pt-24 pb-40 md:pb-56 overflow-hidden text-center">
       {/* Background grid */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
         <div className="absolute inset-0" style={{
@@ -26,7 +27,7 @@ const Hero = () => {
             </span>
           </div>
 
-          {/* Main headline - Javított betűméretek és törésgátlás */}
+          {/* Main headline */}
           <h1 className="opacity-0 animate-slide-up stagger-2">
             <span className="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-extrabold leading-[0.95] tracking-tight">
               WE MAKE
@@ -56,7 +57,7 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Stats row - Középre igazítva */}
+        {/* Stats row */}
         <div className="opacity-0 animate-slide-up stagger-5 grid grid-cols-2 md:grid-cols-4 gap-8 mt-24 pt-12 border-t border-border w-full">
           {[
             { value: '500M+', label: 'Impressions Generated' },
