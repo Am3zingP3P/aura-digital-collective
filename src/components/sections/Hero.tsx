@@ -17,11 +17,11 @@ const Hero = () => {
       {/* Floating accent - Háttérfény */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] md:w-[40rem] md:h-[40rem] bg-primary/10 rounded-full blur-[100px] animate-float pointer-events-none" />
       
-      {/* Felső tartalom (Cím és Gombok) - Vertikálisan középre igazítva a maradék helyen */}
+      {/* Felső tartalom (Cím és Gombok) */}
       <div className="flex-1 flex flex-col justify-center items-center w-full max-w-7xl mx-auto z-10 gap-6 md:gap-8 pb-8">
         
-        {/* Tag */}
-        <div className="opacity-0 animate-slide-up stagger-1">
+        {/* Tag - ITT A JAVÍTÁS: mt-12 hozzáadva, hogy lejjebb kerüljön */}
+        <div className="opacity-0 animate-slide-up stagger-1 mt-12">
           <span className="inline-block px-3 py-1.5 border border-white/10 text-xs md:text-sm font-body tracking-widest text-muted-foreground uppercase bg-white/5 backdrop-blur-md rounded-full shadow-sm">
             Social Media Agency
           </span>
@@ -59,8 +59,6 @@ const Hero = () => {
       </div>
 
       {/* Stats row - "Silver Glass" Lebegő Sziget */}
-      {/* rounded-3xl: Minden sarok (alja is) lekerekítve */}
-      {/* mb-4 md:mb-8: Hagyunk helyet alul, hogy látszódjon a lebegés */}
       <div className="opacity-0 animate-slide-up stagger-5 w-full max-w-5xl mx-auto z-10 mb-4 md:mb-8 px-2">
         <div className="bg-gradient-to-b from-white/10 via-white/5 to-transparent backdrop-blur-2xl border border-white/20 rounded-3xl shadow-[0_0_40px_-10px_rgba(255,255,255,0.1)] p-6 md:p-8 relative overflow-hidden group">
           
@@ -83,7 +81,6 @@ const Hero = () => {
                   <div className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 w-px h-12 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
                 )}
                 
-                {/* Az értékek fehérek/ezüstösek a zöld helyett, hogy jobban passzoljanak az üveghez */}
                 <div className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-white drop-shadow-[0_2px_15px_rgba(255,255,255,0.3)]">
                   {stat.value}
                 </div>
