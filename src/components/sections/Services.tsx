@@ -97,26 +97,57 @@ const services = [
 ];
 
 const ServiceModal = ({ service, open, onClose }: { service: typeof services[0] | null; open: boolean; onClose: () => void }) => {
+  const [animatedIndex, setAnimatedIndex] = useState(-1);
+
+  useEffect(() => {
+    if (open && service?.content.type === 'timeline') {
+      setAnimatedIndex(-1);
+      const items = service.content.items;
+      items.forEach((_, i) => {
+        setTimeout(() => setAnimatedIndex(i), (i + 1) * 400);
+      });
+    }
+  }, [open, service]);
+
   if (!service) return null;
 
   const renderContent = () => {
     switch (service.content.type) {
       case 'timeline':
         return (
-          <div className="relative pl-8 space-y-8 mt-8">
-            <div className="absolute left-3 top-2 bottom-2 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-transparent" />
-            {service.content.items.map((item: any, i: number) => (
-              <div key={i} className="relative">
-                <div className="absolute -left-5 w-4 h-4 rounded-full bg-primary shadow-[0_0_20px_hsl(var(--primary))]" />
-                <div className="bg-card/50 border border-border rounded-lg p-4 ml-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <span className="text-primary font-display font-bold">{item.phase}</span>
-                    <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">{item.duration}</span>
+          <div className="mt-8 flex flex-col items-center">
+            {/* Horizontal timeline container */}
+            <div className="relative w-full overflow-x-auto pb-4">
+              <div className="flex items-start justify-center gap-0 min-w-max px-4">
+                {service.content.items.map((item: any, i: number) => (
+                  <div 
+                    key={i} 
+                    className={`flex flex-col items-center transition-all duration-500 ${animatedIndex >= i ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
+                    style={{ transitionDelay: `${i * 100}ms` }}
+                  >
+                    {/* Content card */}
+                    <div className="w-32 mb-4">
+                      <div className="bg-card/50 border border-border rounded-lg p-3 text-center hover:border-primary/50 transition-colors">
+                        <span className="text-primary font-display font-bold text-sm block">{item.phase}</span>
+                        <span className="text-[10px] text-muted-foreground bg-muted px-2 py-0.5 rounded mt-1 inline-block">{item.duration}</span>
+                        <p className="text-[10px] text-muted-foreground mt-2 leading-tight">{item.description}</p>
+                      </div>
+                    </div>
+                    
+                    {/* Pin and line */}
+                    <div className="relative flex items-center">
+                      <div className={`w-4 h-4 rounded-full bg-primary shadow-[0_0_20px_hsl(var(--primary))] z-10 transition-all duration-300 ${animatedIndex >= i ? 'animate-pulse' : ''}`} />
+                      {i < service.content.items.length - 1 && (
+                        <div 
+                          className={`h-0.5 w-16 bg-gradient-to-r from-primary to-primary/30 transition-all duration-500 origin-left ${animatedIndex >= i ? 'scale-x-100' : 'scale-x-0'}`}
+                          style={{ transitionDelay: `${i * 100 + 200}ms` }}
+                        />
+                      )}
+                    </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         );
       case 'stats':
@@ -196,7 +227,7 @@ const ServiceModal = ({ service, open, onClose }: { service: typeof services[0] 
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-lg bg-background border-border">
+      <DialogContent className="max-w-2xl bg-background border-border">
         <DialogHeader>
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
