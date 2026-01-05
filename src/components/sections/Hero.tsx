@@ -35,8 +35,8 @@ const Hero = () => {
             <span className="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-extrabold leading-[0.95] tracking-tight text-gradient">
               BRANDS
             </span>
-            <span className="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-extrabold leading-[0.95] tracking-tight break-words">
-              UNFORGETTABLE
+            <span className="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-extrabold leading-[0.95] tracking-tight text-gradient">
+              THRIVE
             </span>
           </h1>
 
