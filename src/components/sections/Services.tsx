@@ -104,7 +104,8 @@ const ServiceModal = ({ service, open, onClose }: { service: typeof services[0] 
       setAnimatedIndex(-1);
       const items = service.content.items;
       items.forEach((_, i) => {
-        setTimeout(() => setAnimatedIndex(i), (i + 1) * 400);
+        // Gyorsabb animáció, hogy ne kelljen sokat várni
+        setTimeout(() => setAnimatedIndex(i), (i + 1) * 200);
       });
     }
   }, [open, service]);
@@ -115,38 +116,33 @@ const ServiceModal = ({ service, open, onClose }: { service: typeof services[0] 
     switch (service.content.type) {
       case 'timeline':
         return (
-          <div className="mt-8 flex flex-col items-center">
-            {/* Horizontal timeline container */}
-            <div className="relative w-full overflow-x-auto pb-4">
-              <div className="flex items-start justify-center gap-0 min-w-max px-4">
-                {service.content.items.map((item: any, i: number) => (
-                  <div 
-                    key={i} 
-                    className={`flex flex-col items-center transition-all duration-500 ${animatedIndex >= i ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
-                    style={{ transitionDelay: `${i * 100}ms` }}
-                  >
-                    {/* Content card */}
-                    <div className="w-32 mb-4">
-                      <div className="bg-card/50 border border-border rounded-lg p-3 text-center hover:border-primary/50 transition-colors">
-                        <span className="text-primary font-display font-bold text-sm block">{item.phase}</span>
-                        <span className="text-[10px] text-muted-foreground bg-muted px-2 py-0.5 rounded mt-1 inline-block">{item.duration}</span>
-                        <p className="text-[10px] text-muted-foreground mt-2 leading-tight">{item.description}</p>
-                      </div>
-                    </div>
-                    
-                    {/* Pin and line */}
-                    <div className="relative flex items-center">
-                      <div className={`w-4 h-4 rounded-full bg-primary shadow-[0_0_20px_hsl(var(--primary))] z-10 transition-all duration-300 ${animatedIndex >= i ? 'animate-pulse' : ''}`} />
-                      {i < service.content.items.length - 1 && (
-                        <div 
-                          className={`h-0.5 w-16 bg-gradient-to-r from-primary to-primary/30 transition-all duration-500 origin-left ${animatedIndex >= i ? 'scale-x-100' : 'scale-x-0'}`}
-                          style={{ transitionDelay: `${i * 100 + 200}ms` }}
-                        />
-                      )}
-                    </div>
+          // ITT TÖRTÉNT A VÁLTOZTATÁS: Vertikális (függőleges) elrendezés
+          <div className="mt-8 relative pl-2">
+            {/* Függőleges összekötő vonal */}
+            <div className="absolute left-[19px] top-3 bottom-8 w-0.5 bg-gradient-to-b from-primary/50 to-transparent" />
+            
+            <div className="space-y-8">
+              {service.content.items.map((item: any, i: number) => (
+                <div 
+                  key={i} 
+                  className={`relative flex items-start gap-6 transition-all duration-500 ease-out ${animatedIndex >= i ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
+                  style={{ transitionDelay: `${i * 100}ms` }}
+                >
+                  {/* Fénylő pont (Marker) */}
+                  <div className={`relative mt-1 flex-shrink-0 w-4 h-4 rounded-full border-2 border-primary bg-background shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)] z-10 transition-transform duration-300 ${animatedIndex >= i ? 'scale-100' : 'scale-0'}`}>
+                    <div className="absolute inset-0 bg-primary/20 rounded-full animate-pulse" />
                   </div>
-                ))}
-              </div>
+                  
+                  {/* Tartalom */}
+                  <div className="flex-1 bg-card/30 border border-border/50 rounded-lg p-4 hover:border-primary/30 transition-colors">
+                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                        <h4 className="text-lg font-display font-bold text-primary tracking-wide">{item.phase}</h4>
+                        <span className="text-xs font-mono text-muted-foreground bg-primary/10 px-2 py-1 rounded border border-primary/10 w-fit">{item.duration}</span>
+                     </div>
+                     <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         );
