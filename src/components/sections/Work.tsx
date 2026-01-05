@@ -1,4 +1,5 @@
 import { ArrowUpRight } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 const projects = [
   {
@@ -28,8 +29,31 @@ const projects = [
 ];
 
 const Work = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-32 px-6 md:px-12 lg:px-24">
+    <section 
+      ref={sectionRef}
+      className={`py-32 px-6 md:px-12 lg:px-24 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-20">
@@ -50,7 +74,8 @@ const Work = () => {
           {projects.map((project, i) => (
             <div
               key={i}
-              className="group border-t border-border last:border-b py-8 md:py-12 cursor-pointer hover:bg-secondary/30 transition-colors duration-300 -mx-6 md:-mx-12 lg:-mx-24 px-6 md:px-12 lg:px-24"
+              className={`group border-t border-border last:border-b py-8 md:py-12 cursor-pointer hover:bg-secondary/30 transition-all duration-500 -mx-6 md:-mx-12 lg:-mx-24 px-6 md:px-12 lg:px-24 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
+              style={{ transitionDelay: `${i * 150}ms` }}
             >
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="flex items-center gap-8">
